@@ -1,29 +1,23 @@
-from queue import Queue
+
+def get_input():
+    """Function to take input from the user."""
+    s1 = input("Enter first string: ")
+    s2 = input("Enter second string: ")
+    return s1, s2
+
+def uncommonConcat(s1, s2):
+    # Convert strings to sets to find unique characters
+    set1 = set(s1)
+    set2 = set(s2)
+    # Find uncommon characters
+    uncommonConcat= (set1 - set2) | (set2 - set1)
+    # Convert the set to a sorted string
+    result = ''.join(sorted(uncommonConcat))
+    return result[::-1]
 
 
-def myArray():
+# Driver code to test the functions
+s1, s2 = get_input()
+output = uncommonConcat(s1, s2)
+print("Output:",output)
 
-    arr = [10,20,30,40]
-    return arr
-
-
-def reverseArrayQueue(arr):
-    #reverses an array using Queue.
-    q = Queue()
-
-    #enqueues all elements of the array into the queue
-    for element in arr:
-        q.put(element)
-
-    #dequeue all elements and store them in the list
-    reversedList = []
-    while not q.empty():
-        reversedList.insert(0, q.get())  # Insert at the beginning to reverse order
-
-    return reversedList
-
-
-if __name__ == "__main__":
-    arr = myArray()  # Step 1: Takes array
-    reversedArr = reverseArrayQueue(arr)  # Step 2: Reverse using Queue
-    print("Reversed array:", *reversedArr)  # Step 3: Print output
