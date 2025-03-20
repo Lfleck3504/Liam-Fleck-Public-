@@ -1,0 +1,58 @@
+
+#makes the class "treeNode"
+class TreeNode:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+
+
+
+
+#makes the class "Binary tree"
+class BinaryTree:
+    def __init__(self, rootValue):
+        self.root = TreeNode(rootValue)
+
+#sets up the pre order
+    def insertPreorder(self, node, value):
+        if node is None:
+            return TreeNode(value)
+
+        if node.left is None:
+            node.left = TreeNode(value)
+        elif node.right is None:
+            node.right = TreeNode(value)
+        else:
+            self.insertPreorder(node.left, value)
+
+        return node
+
+
+
+#makes the tree print in post order
+    def postorderTraversal(self, node):
+        if node:
+            self.postorderTraversal(node.left)
+            self.postorderTraversal(node.right)
+            print(node.value, end=" ")
+
+
+
+#Do the thing section
+bt = BinaryTree(1)
+bt.root.left = TreeNode(2)
+bt.root.right = TreeNode(3)
+bt.root.left.left = TreeNode(4)
+bt.root.left.right = TreeNode(5)
+print("Postorder Traversal before insert:")
+bt.postorderTraversal(bt.root)
+
+
+bt.insertPreorder(bt.root, 6)
+
+
+print("\nPostorder Traversal after insert:")
+bt.postorderTraversal(bt.root)
+#If your reading this "HI, enjoy the rest of your break!!!  -Liam ♥♥♥"
