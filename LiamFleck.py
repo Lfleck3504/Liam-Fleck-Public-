@@ -1,23 +1,39 @@
-
-def get_input():
-    """Function to take input from the user."""
-    s1 = input("Enter first string: ")
-    s2 = input("Enter second string: ")
-    return s1, s2
-
-def uncommonConcat(s1, s2):
-    # Convert strings to sets to find unique characters
-    set1 = set(s1)
-    set2 = set(s2)
-    # Find uncommon characters
-    uncommonConcat= (set1 - set2) | (set2 - set1)
-    # Convert the set to a sorted string
-    result = ''.join(sorted(uncommonConcat))
-    return result[::-1]
+class PhoneBook:
+   def __init__(self):
+       self.contacts = {}
 
 
-# Driver code to test the functions
-s1, s2 = get_input()
-output = uncommonConcat(s1, s2)
-print("Output:",output)
+   def add_contact(self, name, number):
+       self.contacts[name] = number
+       print(f"Contact {name} added successfully.")
+
+
+   def search_contact(self, name):
+       return self.contacts.get(name, "Contact not found.")
+
+
+   def delete_contact(self, name):
+       if name in self.contacts:
+           del self.contacts[name]
+           print(f"Contact {name} deleted successfully.")
+       else:
+           print("Contact not found.")
+
+
+   def display_contacts(self):
+       if self.contacts:
+           for name, number in self.contacts.items():
+               print(f"{name}: {number}")
+       else:
+           print("Phonebook is empty.")
+
+
+phonebook = PhoneBook()
+phonebook.add_contact("abby", "123-456-7890")
+phonebook.add_contact("allan", "987-654-3210")
+print(phonebook.search_contact("abby"))  # Output: 123-456-7890
+phonebook.display_contacts()
+phonebook.delete_contact("abby")
+phonebook.display_contacts()
+
 
