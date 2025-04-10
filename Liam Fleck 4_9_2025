@@ -1,0 +1,98 @@
+class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+
+
+class BST:
+    def __init__(self):
+        self.root = None
+
+    # Insert value into BST
+    def insert(self, val):
+        if not self.root:
+            self.root = TreeNode(val)
+        else:
+            self.addNode(self.root, val)
+
+    def addNode(self, node, val):
+        if val < node.val:
+            if not node.left:
+                node.left = TreeNode(val)
+            else:
+                self.addNode(node.left, val)
+        else:
+            if not node.right:
+                node.right = TreeNode(val)
+            else:
+                self.addNode(node.right, val)
+
+    def inputValues(self):
+        values = input("Enter tree values separated by spaces: ")
+        for val in map(int, values.strip().split()):
+            self.insert(val)
+
+    def printInorder(self):
+        print("Tree (Inorder Traversal):")
+        def inorder(node):
+            if node:
+                inorder(node.left)
+                print(node.val, end=' ')
+                inorder(node.right)
+        inorder(self.root)
+        print()
+
+    def sumKLargest(self, k):
+        count = 0
+        total_sum = 0
+
+        def reverseInorder(node):
+            nonlocal count, total_sum
+            if node and count < k:
+                reverseInorder(node.right)
+                if count < k:
+                    total_sum += node.val
+                    count += 1
+                reverseInorder(node.left)
+
+        reverseInorder(self.root)
+
+        kthLargest = self.findKthLargest(k)
+        return self.sumGreaterEqual(self.root, kthLargest)
+
+    def findKthLargest(self, k):
+        count = 0
+        result = None
+
+        def reverseInorder(node):
+            nonlocal count, result
+            if node and count < k:
+                reverseInorder(node.right)
+                count += 1
+                if count == k:
+                    result = node.val
+                    return
+                reverseInorder(node.left)
+
+        reverseInorder(self.root)
+        return result
+
+    def sumGreaterEqual(self, node, value):
+        if not node:
+            return 0
+        if node.val < value:
+            return self.sumGreaterEqual(node.right, value)
+        else:
+            return (node.val +
+                    self.sumGreaterEqual(node.left, value) +
+                    self.sumGreaterEqual(node.right, value))
+
+if __name__ == "__main__":
+    bst = BST()
+    bst.inputValues()  # e.g. input: 10 5 1 7 40 50 13 9
+    bst.printInorder()
+
+    k = int(input("Enter value of k: "))
+    result = bst.sumKLargest(k)
+    print(f"\nSum of all elements >= {k}-th largest element is: {result}") #so glad {} works in python too
