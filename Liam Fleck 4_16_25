@@ -1,0 +1,28 @@
+import heapq
+
+def inputTree():
+    values = input("Enter tree values separated by spaces: ")
+    return list(map(int, values.strip().split()))
+
+def heapSortDesc(arr):
+    # Create a min-heap
+    heapq.heapify(arr)
+
+    # Extract elements from min-heap and collect them
+    sortedList = []
+    while arr:
+        sortedList.append(heapq.heappop(arr))
+
+    # Reverse to get descending order
+    return sortedList[::-1]
+
+
+def printSortedValues(sortedArr):
+    print("Sorted values (descending):", ' '.join(map(str, sortedArr)))
+
+
+# Main function
+if __name__ == "__main__":
+    treeValues = inputTree()
+    sortedValues = heapSortDesc(treeValues)
+    printSortedValues(sortedValues)
