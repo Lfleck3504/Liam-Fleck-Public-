@@ -1,0 +1,34 @@
+def inputGraph():
+    n = int(input("Enter the number of nodes: "))
+    print("Enter the adjacency matrix row by row (space separated):")
+    adjMatrix = []
+    for i in range(n):
+        row = list(map(int, input(f"Row {i+1}: ").split()))
+        if len(row) != n:
+            raise ValueError("Each row must have exactly n elements.")
+        adjMatrix.append(row)
+    return adjMatrix
+
+def deleteNode(adjMatrix, nodeIndex):
+    # Remove the row corresponding to the node
+    adjMatrix.pop(nodeIndex)
+    # Remove the column corresponding to the node
+    for row in adjMatrix:
+        row.pop(nodeIndex)
+    return adjMatrix
+
+def displayGraph(adjMatrix):
+    print("Adjacency Matrix:")
+    for row in adjMatrix:
+        print(" ".join(map(str, row)))
+
+# Main 
+graph = inputGraph()
+print("\nGraph before deletion:")
+displayGraph(graph)
+
+# Delete node 2 (which is index 1 if 0-based indexing is used)
+graphAfterDeletion = deleteNode(graph, 1)
+
+print("\nGraph after deleting node 2:")
+displayGraph(graphAfterDeletion)
